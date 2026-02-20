@@ -1,6 +1,5 @@
-import java.util.Queue;
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Stack;
 
 public class PalindromeCheckerApp {
 
@@ -9,21 +8,20 @@ public class PalindromeCheckerApp {
         // Original string to check
         String original = "racecar";
 
-        // Create a queue (FIFO) and a stack (LIFO)
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        // Create a deque
+        Deque<Character> deque = new LinkedList<>();
 
-        // Enqueue and push each character
+        // Insert all characters into the deque
         for (int i = 0; i < original.length(); i++) {
-            char c = original.charAt(i);
-            queue.add(c);   // enqueue
-            stack.push(c);  // push
+            deque.addLast(original.charAt(i)); // Insert at rear
         }
 
-        // Compare dequeue vs pop
+        // Compare front and rear characters
         boolean isPalindrome = true;
-        while (!queue.isEmpty() && !stack.isEmpty()) {
-            if (!queue.remove().equals(stack.pop())) { // dequeue vs pop
+        while (deque.size() > 1) {
+            char front = deque.removeFirst(); // remove from front
+            char rear = deque.removeLast();   // remove from rear
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }
