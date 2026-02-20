@@ -1,3 +1,5 @@
+import java.util.Queue;
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class PalindromeCheckerApp {
@@ -7,22 +9,28 @@ public class PalindromeCheckerApp {
         // Original string to check
         String original = "racecar";
 
-        // Create a stack to hold characters
+        // Create a queue (FIFO) and a stack (LIFO)
+        Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
-        // Push each character of the string into the stack
+        // Enqueue and push each character
         for (int i = 0; i < original.length(); i++) {
-            stack.push(original.charAt(i));
+            char c = original.charAt(i);
+            queue.add(c);   // enqueue
+            stack.push(c);  // push
         }
 
-        // Pop characters from stack to build reversed string
-        String reversed = "";
-        while (!stack.isEmpty()) {
-            reversed += stack.pop();
+        // Compare dequeue vs pop
+        boolean isPalindrome = true;
+        while (!queue.isEmpty() && !stack.isEmpty()) {
+            if (!queue.remove().equals(stack.pop())) { // dequeue vs pop
+                isPalindrome = false;
+                break;
+            }
         }
 
-        // Compare original and reversed strings
-        if (original.equals(reversed)) {
+        // Display result
+        if (isPalindrome) {
             System.out.println("The string \"" + original + "\" is a palindrome.");
         } else {
             System.out.println("The string \"" + original + "\" is not a palindrome.");
