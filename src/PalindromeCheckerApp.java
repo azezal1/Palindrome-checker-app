@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
@@ -5,25 +7,22 @@ public class PalindromeCheckerApp {
         // Original string to check
         String original = "racecar";
 
-        // Convert string to character array
-        char[] chars = original.toCharArray();
+        // Create a stack to hold characters
+        Stack<Character> stack = new Stack<>();
 
-        // Two-pointer approach
-        boolean isPalindrome = true;
-        int start = 0;
-        int end = chars.length - 1;
-
-        while (start < end) {
-            if (chars[start] != chars[end]) {
-                isPalindrome = false;
-                break; // Stop checking once mismatch is found
-            }
-            start++;
-            end--;
+        // Push each character of the string into the stack
+        for (int i = 0; i < original.length(); i++) {
+            stack.push(original.charAt(i));
         }
 
-        // Display result
-        if (isPalindrome) {
+        // Pop characters from stack to build reversed string
+        String reversed = "";
+        while (!stack.isEmpty()) {
+            reversed += stack.pop();
+        }
+
+        // Compare original and reversed strings
+        if (original.equals(reversed)) {
             System.out.println("The string \"" + original + "\" is a palindrome.");
         } else {
             System.out.println("The string \"" + original + "\" is not a palindrome.");
